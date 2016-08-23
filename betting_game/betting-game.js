@@ -7,7 +7,12 @@ $(document).ready(function(){
   $("#submit").click(function(event){
     var bet = parseInt($('#bet').val());
     var guess = parseInt($('#guess').val());
-    validateGuess(guess);
+    if (!validateBet(bet)){
+      console.log("do something!");
+    } 
+    if (!validateGuess(guess)){
+      console.log("do something else!");
+    }
     event.preventDefault();
     var actualNumber = randomize();
     verify(bet, guess, actualNumber);
@@ -17,10 +22,10 @@ $(document).ready(function(){
 
   function validateBet(bet){
     if (isNaN(bet)) {
-    alert("You must type an amount in numbers");
+    // alert("You must type an amount in numbers");
     return false;
     } else if (bet < 5 || bet > 10) {
-    alert("You may only bet between $5 and $10");
+    // alert("You may only bet between $5 and $10");
     return false;
     } else {
       return true;
@@ -30,7 +35,7 @@ $(document).ready(function(){
 
   function validateGuess(guess) {
     if (guess < 1 || guess > 10 || isNaN(guess)) {  
-    alert("You must guess between 1 and 10");
+    // alert("You must guess between 1 and 10");
     return false;
     } else {
       return true;
@@ -47,15 +52,19 @@ $(document).ready(function(){
   function verify(bet, guess, randomize) {
     if (guess === bet) {
       playerCash += bet;
-      alert("Lucky guess! You win $" + bet + ". Your total cash is $" + playerCash);
+      console.log("win");
+      // alert("Lucky guess! You win $" + bet + ". Your total cash is $" + playerCash);
     } else if (guess === (randomize + 1 || randomize - 1)) {
-      alert("Close! You missed it by 1. The answer was " + randomize + ". Your total cash is $" + playerCash);
+      console.log("close - no loss")
+      // alert("Close! You missed it by 1. The answer was " + randomize + ". Your total cash is $" + playerCash);
     } else if (guess !== randomize){
         playerCash -= bet; 
         if (playerCash <= 0) {
-          alert("Game over. You lose! The correct answer was " + randomize);
+          console.log("game over");
+          // alert("Game over. You lose! The correct answer was " + randomize);
         } else {
-          alert("Sorry! Wrong answer. You lose $ " + bet + ". The correct answer was " + randomize + ". Your total cash is $" + playerCash);
+          console.log("lose");
+          // alert("Sorry! Wrong answer. You lose $ " + bet + ". The correct answer was " + randomize + ". Your total cash is $" + playerCash);
         }
     }
   }
